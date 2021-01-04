@@ -1,0 +1,147 @@
+<div *ngIf="(board$ | async) as b" class="chessboard">
+  <!-- 1st -->
+  <div class="white" (click)="tileClick('A', 0)" [class.selected]="b.lineA[0].selected"
+    [class.blocked]="b.lineA[0].blocked" [class.destiny]="b.lineA[0].destiny">{{b.lineA[0].piece?.type}}</div>
+  <div class="black" (click)="tileClick('A', 1)" [class.selected]="b.lineA[1].selected"
+    [class.blocked]="b.lineA[1].blocked" [class.destiny]="b.lineA[1].destiny">{{b.lineA[1].piece?.type}}</div>
+  <div class="white" (click)="tileClick('A', 2)" [class.selected]="b.lineA[2].selected"
+    [class.blocked]="b.lineA[2].blocked" [class.destiny]="b.lineA[2].destiny">{{b.lineA[2].piece?.type}}</div>
+  <div class="black" (click)="tileClick('A', 3)" [class.selected]="b.lineA[3].selected"
+    [class.blocked]="b.lineA[3].blocked" [class.destiny]="b.lineA[3].destiny">{{b.lineA[3].piece?.type}}</div>
+  <div class="white" (click)="tileClick('A', 4)" [class.selected]="b.lineA[4].selected"
+    [class.blocked]="b.lineA[4].blocked" [class.destiny]="b.lineA[4].destiny">{{b.lineA[4].piece?.type}}</div>
+  <div class="black" (click)="tileClick('A', 5)" [class.selected]="b.lineA[5].selected"
+    [class.blocked]="b.lineA[5].blocked" [class.destiny]="b.lineA[5].destiny">{{b.lineA[5].piece?.type}}</div>
+  <div class="white" (click)="tileClick('A', 6)" [class.selected]="b.lineA[6].selected"
+    [class.blocked]="b.lineA[6].blocked" [class.destiny]="b.lineA[6].destiny">{{b.lineA[6].piece?.type}}</div>
+  <div class="black" (click)="tileClick('A', 7)" [class.selected]="b.lineA[7].selected"
+    [class.blocked]="b.lineA[7].blocked" [class.destiny]="b.lineA[7].destiny">{{b.lineA[7].piece?.type}}</div>
+  <!-- 2nd -->
+  <div class="black" (click)="tileClick('B', 0)" [class.selected]="b.lineB[0].selected"
+    [class.blocked]="b.lineB[0].blocked" [class.destiny]="b.lineB[0].destiny">{{b.lineB[0].piece?.type}}</div>
+  <div class="white" (click)="tileClick('B', 1)" [class.selected]="b.lineB[1].selected"
+    [class.blocked]="b.lineB[1].blocked" [class.destiny]="b.lineB[1].destiny">{{b.lineB[1].piece?.type}}</div>
+  <div class="black" (click)="tileClick('B', 2)" [class.selected]="b.lineB[2].selected"
+    [class.blocked]="b.lineB[2].blocked" [class.destiny]="b.lineB[2].destiny">{{b.lineB[2].piece?.type}}</div>
+  <div class="white" (click)="tileClick('B', 3)" [class.selected]="b.lineB[3].selected"
+    [class.blocked]="b.lineB[3].blocked" [class.destiny]="b.lineB[3].destiny">{{b.lineB[3].piece?.type}}</div>
+  <div class="black" (click)="tileClick('B', 4)" [class.selected]="b.lineB[4].selected"
+    [class.blocked]="b.lineB[4].blocked" [class.destiny]="b.lineB[4].destiny">{{b.lineB[4].piece?.type}}</div>
+  <div class="white" (click)="tileClick('B', 5)" [class.selected]="b.lineB[5].selected"
+    [class.blocked]="b.lineB[5].blocked" [class.destiny]="b.lineB[5].destiny">{{b.lineB[5].piece?.type}}</div>
+  <div class="black" (click)="tileClick('B', 6)" [class.selected]="b.lineB[6].selected"
+    [class.blocked]="b.lineB[6].blocked" [class.destiny]="b.lineB[6].destiny">{{b.lineB[6].piece?.type}}</div>
+  <div class="white" (click)="tileClick('B', 7)" [class.selected]="b.lineB[7].selected"
+    [class.blocked]="b.lineB[7].blocked" [class.destiny]="b.lineB[7].destiny">{{b.lineB[7].piece?.type}}</div>
+  <!-- 3th -->
+  <div class="white" (click)="tileClick('C', 0)" [class.selected]="b.lineC[0].selected"
+    [class.blocked]="b.lineC[0].blocked" [class.destiny]="b.lineC[0].destiny">{{b.lineC[0].piece?.type}}</div>
+  <div class="black" (click)="tileClick('C', 1)" [class.selected]="b.lineC[1].selected"
+    [class.blocked]="b.lineC[1].blocked" [class.destiny]="b.lineC[1].destiny">{{b.lineC[1].piece?.type}}</div>
+  <div class="white" (click)="tileClick('C', 2)" [class.selected]="b.lineC[2].selected"
+    [class.blocked]="b.lineC[2].blocked" [class.destiny]="b.lineC[2].destiny">{{b.lineC[2].piece?.type}}</div>
+  <div class="black" (click)="tileClick('C', 3)" [class.selected]="b.lineC[3].selected"
+    [class.blocked]="b.lineC[3].blocked" [class.destiny]="b.lineC[3].destiny">{{b.lineC[3].piece?.type}}</div>
+  <div class="white" (click)="tileClick('C', 4)" [class.selected]="b.lineC[4].selected"
+    [class.blocked]="b.lineC[4].blocked" [class.destiny]="b.lineC[4].destiny">{{b.lineC[4].piece?.type}}</div>
+  <div class="black" (click)="tileClick('C', 5)" [class.selected]="b.lineC[5].selected"
+    [class.blocked]="b.lineC[5].blocked" [class.destiny]="b.lineC[5].destiny">{{b.lineC[5].piece?.type}}</div>
+  <div class="white" (click)="tileClick('C', 6)" [class.selected]="b.lineC[6].selected"
+    [class.blocked]="b.lineC[6].blocked" [class.destiny]="b.lineC[6].destiny">{{b.lineC[6].piece?.type}}</div>
+  <div class="black" (click)="tileClick('C', 7)" [class.selected]="b.lineC[7].selected"
+    [class.blocked]="b.lineC[7].blocked" [class.destiny]="b.lineC[7].destiny">{{b.lineC[7].piece?.type}}</div>
+  <!-- 4st -->
+  <div class="black" (click)="tileClick('D', 0)" [class.selected]="b.lineD[0].selected"
+    [class.blocked]="b.lineD[0].blocked" [class.destiny]="b.lineD[0].destiny">{{b.lineD[0].piece?.type}}</div>
+  <div class="white" (click)="tileClick('D', 1)" [class.selected]="b.lineD[1].selected"
+    [class.blocked]="b.lineD[1].blocked" [class.destiny]="b.lineD[1].destiny">{{b.lineD[1].piece?.type}}</div>
+  <div class="black" (click)="tileClick('D', 2)" [class.selected]="b.lineD[2].selected"
+    [class.blocked]="b.lineD[2].blocked" [class.destiny]="b.lineD[2].destiny">{{b.lineD[2].piece?.type}}</div>
+  <div class="white" (click)="tileClick('D', 3)" [class.selected]="b.lineD[3].selected"
+    [class.blocked]="b.lineD[3].blocked" [class.destiny]="b.lineD[3].destiny">{{b.lineD[3].piece?.type}}</div>
+  <div class="black" (click)="tileClick('D', 4)" [class.selected]="b.lineD[4].selected"
+    [class.blocked]="b.lineD[4].blocked" [class.destiny]="b.lineD[4].destiny">{{b.lineD[4].piece?.type}}</div>
+  <div class="white" (click)="tileClick('D', 5)" [class.selected]="b.lineD[5].selected"
+    [class.blocked]="b.lineD[5].blocked" [class.destiny]="b.lineD[5].destiny">{{b.lineD[5].piece?.type}}</div>
+  <div class="black" (click)="tileClick('D', 6)" [class.selected]="b.lineD[6].selected"
+    [class.blocked]="b.lineD[6].blocked" [class.destiny]="b.lineD[6].destiny">{{b.lineD[6].piece?.type}}</div>
+  <div class="white" (click)="tileClick('D', 7)" [class.selected]="b.lineD[7].selected"
+    [class.blocked]="b.lineD[7].blocked" [class.destiny]="b.lineD[7].destiny">{{b.lineD[7].piece?.type}}</div>
+  <!-- 5th -->
+  <div class="white" (click)="tileClick('E', 0)" [class.selected]="b.lineE[0].selected"
+    [class.blocked]="b.lineE[0].blocked" [class.destiny]="b.lineE[0].destiny">{{b.lineE[0].piece?.type}}</div>
+  <div class="black" (click)="tileClick('E', 1)" [class.selected]="b.lineE[1].selected"
+    [class.blocked]="b.lineE[1].blocked" [class.destiny]="b.lineE[1].destiny">{{b.lineE[1].piece?.type}}</div>
+  <div class="white" (click)="tileClick('E', 2)" [class.selected]="b.lineE[2].selected"
+    [class.blocked]="b.lineE[2].blocked" [class.destiny]="b.lineE[2].destiny">{{b.lineE[2].piece?.type}}</div>
+  <div class="black" (click)="tileClick('E', 3)" [class.selected]="b.lineE[3].selected"
+    [class.blocked]="b.lineE[3].blocked" [class.destiny]="b.lineE[3].destiny">{{b.lineE[3].piece?.type}}</div>
+  <div class="white" (click)="tileClick('E', 4)" [class.selected]="b.lineE[4].selected"
+    [class.blocked]="b.lineE[4].blocked" [class.destiny]="b.lineE[4].destiny">{{b.lineE[4].piece?.type}}</div>
+  <div class="black" (click)="tileClick('E', 5)" [class.selected]="b.lineE[5].selected"
+    [class.blocked]="b.lineE[5].blocked" [class.destiny]="b.lineE[5].destiny">{{b.lineE[5].piece?.type}}</div>
+  <div class="white" (click)="tileClick('E', 6)" [class.selected]="b.lineE[6].selected"
+    [class.blocked]="b.lineE[6].blocked" [class.destiny]="b.lineE[6].destiny">{{b.lineE[6].piece?.type}}</div>
+  <div class="black" (click)="tileClick('E', 7)" [class.selected]="b.lineE[7].selected"
+    [class.blocked]="b.lineE[7].blocked" [class.destiny]="b.lineE[7].destiny">{{b.lineE[7].piece?.type}}</div>
+  <!-- 6th -->
+  <div class="black" (click)="tileClick('F', 0)" [class.selected]="b.lineF[0].selected"
+    [class.blocked]="b.lineF[0].blocked" [class.destiny]="b.lineF[0].destiny">{{b.lineF[0].piece?.type}}</div>
+  <div class="white" (click)="tileClick('F', 1)" [class.selected]="b.lineF[1].selected"
+    [class.blocked]="b.lineF[1].blocked" [class.destiny]="b.lineF[1].destiny">{{b.lineF[1].piece?.type}}</div>
+  <div class="black" (click)="tileClick('F', 2)" [class.selected]="b.lineF[2].selected"
+    [class.blocked]="b.lineF[2].blocked" [class.destiny]="b.lineF[2].destiny">{{b.lineF[2].piece?.type}}</div>
+  <div class="white" (click)="tileClick('F', 3)" [class.selected]="b.lineF[3].selected"
+    [class.blocked]="b.lineF[3].blocked" [class.destiny]="b.lineF[3].destiny">{{b.lineF[3].piece?.type}}</div>
+  <div class="black" (click)="tileClick('F', 4)" [class.selected]="b.lineF[4].selected"
+    [class.blocked]="b.lineF[4].blocked" [class.destiny]="b.lineF[4].destiny">{{b.lineF[4].piece?.type}}</div>
+  <div class="white" (click)="tileClick('F', 5)" [class.selected]="b.lineF[5].selected"
+    [class.blocked]="b.lineF[5].blocked" [class.destiny]="b.lineF[5].destiny">{{b.lineF[5].piece?.type}}</div>
+  <div class="black" (click)="tileClick('F', 6)" [class.selected]="b.lineF[6].selected"
+    [class.blocked]="b.lineF[6].blocked" [class.destiny]="b.lineF[6].destiny">{{b.lineF[6].piece?.type}}</div>
+  <div class="white" (click)="tileClick('F', 7)" [class.selected]="b.lineF[7].selected"
+    [class.blocked]="b.lineF[7].blocked" [class.destiny]="b.lineF[7].destiny">{{b.lineF[7].piece?.type}}</div>
+  <!-- 7th -->
+  <div class="white" (click)="tileClick('G', 0)" [class.selected]="b.lineG[0].selected"
+    [class.blocked]="b.lineG[0].blocked" [class.destiny]="b.lineG[0].destiny">{{b.lineG[0].piece?.type}}</div>
+  <div class="black" (click)="tileClick('G', 1)" [class.selected]="b.lineG[1].selected"
+    [class.blocked]="b.lineG[1].blocked" [class.destiny]="b.lineG[1].destiny">{{b.lineG[1].piece?.type}}</div>
+  <div class="white" (click)="tileClick('G', 2)" [class.selected]="b.lineG[2].selected"
+    [class.blocked]="b.lineG[2].blocked" [class.destiny]="b.lineG[2].destiny">{{b.lineG[2].piece?.type}}</div>
+  <div class="black" (click)="tileClick('G', 3)" [class.selected]="b.lineG[3].selected"
+    [class.blocked]="b.lineG[3].blocked" [class.destiny]="b.lineG[3].destiny">{{b.lineG[3].piece?.type}}</div>
+  <div class="white" (click)="tileClick('G', 4)" [class.selected]="b.lineG[4].selected"
+    [class.blocked]="b.lineG[4].blocked" [class.destiny]="b.lineG[4].destiny">{{b.lineG[4].piece?.type}}</div>
+  <div class="black" (click)="tileClick('G', 5)" [class.selected]="b.lineG[5].selected"
+    [class.blocked]="b.lineG[5].blocked" [class.destiny]="b.lineG[5].destiny">{{b.lineG[5].piece?.type}}</div>
+  <div class="white" (click)="tileClick('G', 6)" [class.selected]="b.lineG[6].selected"
+    [class.blocked]="b.lineG[6].blocked" [class.destiny]="b.lineG[6].destiny">{{b.lineG[6].piece?.type}}</div>
+  <div class="black" (click)="tileClick('G', 7)" [class.selected]="b.lineG[7].selected"
+    [class.blocked]="b.lineG[7].blocked" [class.destiny]="b.lineG[7].destiny">{{b.lineG[7].piece?.type}}</div>
+  <!-- 8th -->
+  <div class="black" (click)="tileClick('H', 0)" [class.selected]="b.lineH[0].selected"
+    [class.blocked]="b.lineH[0].blocked" [class.destiny]="b.lineH[0].destiny">{{b.lineH[0].piece?.type}}</div>
+  <div class="white" (click)="tileClick('H', 1)" [class.selected]="b.lineH[1].selected"
+    [class.blocked]="b.lineH[1].blocked" [class.destiny]="b.lineH[1].destiny">{{b.lineH[1].piece?.type}}</div>
+  <div class="black" (click)="tileClick('H', 2)" [class.selected]="b.lineH[2].selected"
+    [class.blocked]="b.lineH[2].blocked" [class.destiny]="b.lineH[2].destiny">{{b.lineH[2].piece?.type}}</div>
+  <div class="white" (click)="tileClick('H', 3)" [class.selected]="b.lineH[3].selected"
+    [class.blocked]="b.lineH[3].blocked" [class.destiny]="b.lineH[3].destiny">{{b.lineH[3].piece?.type}}</div>
+  <div class="black" (click)="tileClick('H', 4)" [class.selected]="b.lineH[4].selected"
+    [class.blocked]="b.lineH[4].blocked" [class.destiny]="b.lineH[4].destiny">{{b.lineH[4].piece?.type}}</div>
+  <div class="white" (click)="tileClick('H', 5)" [class.selected]="b.lineH[5].selected"
+    [class.blocked]="b.lineH[5].blocked" [class.destiny]="b.lineH[5].destiny">{{b.lineH[5].piece?.type}}</div>
+  <div class="black" (click)="tileClick('H', 6)" [class.selected]="b.lineH[6].selected"
+    [class.blocked]="b.lineH[6].blocked" [class.destiny]="b.lineH[6].destiny">{{b.lineH[6].piece?.type}}</div>
+  <div class="white" (click)="tileClick('H', 7)" [class.selected]="b.lineH[7].selected"
+    [class.blocked]="b.lineH[7].blocked" [class.destiny]="b.lineH[7].destiny">{{b.lineH[7].piece?.type}}</div>
+</div>
+
+<button (click)="increment()">Increment</button>
+
+<!--<div>Current Count: {{ count$ }}</div>-->
+
+
+<button (click)="decrement()">Decrement</button>
+
+<button (click)="reset()">Reset Counter</button>
