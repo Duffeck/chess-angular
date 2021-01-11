@@ -23,6 +23,7 @@ export function chessReducer(state: Board = defaultBoard, action: Action) {
         case ChessActions.MOVE_PIECE:
             var board = JSON.parse(JSON.stringify(state)) as Board;
             board = movePiece(board, action.payload.line, action.payload.col);
+            board.whiteTurn = !board.whiteTurn;
             return newState(state, board);
         case ChessActions.RESET_GAME:
         default:
@@ -53,8 +54,24 @@ function selectTile(board: Board, line: string, col: number) {
                     checkBlackPawnMovement(board, line, col);
                     break;
                 case WhitePiece.ROOK:
-                    console.log('aaaaaaaaaaaaaa');
+                case BlackPiece.ROOK:
                     checkRookMovement(board, line, col);
+                    break;
+                case WhitePiece.BISHOP:
+                case BlackPiece.BISHOP:
+                    checkBishopMovement(board, line, col);
+                    break;
+                case WhitePiece.QUEEN:
+                case BlackPiece.QUEEN:
+                    checkQueenMovement(board, line, col);
+                    break;
+                case WhitePiece.KING:
+                case BlackPiece.KING:
+                    checkKingMovement(board, line, col);
+                    break;
+                case WhitePiece.KNIGHT:
+                case BlackPiece.KNIGHT:
+                    checkKnightMovement(board, line, col);
                     break;
             }
         }
@@ -107,14 +124,32 @@ function checkBlackPawnMovement(board: Board, line: string, col: number) {
             board['line' + helperLine[linha + 2]][col].destiny = true;
         }
 
-        if (col < 7 && board['line' + helperLine[linha - 1]][col + 1].piece && Object.values(WhitePiece).includes(board['line' + helperLine[linha - 1]][col + 1].piece.type)) {
-            board['line' + helperLine[linha - 1]][col + 1].blocked = true;
+        if (col < 7 && board['line' + helperLine[linha + 1]][col + 1].piece && Object.values(WhitePiece).includes(board['line' + helperLine[linha + 1]][col + 1].piece.type)) {
+            board['line' + helperLine[linha + 1]][col + 1].blocked = true;
+        }
+
+        if (col > 0 && board['line' + helperLine[linha + 1]][col - 1].piece && Object.values(WhitePiece).includes(board['line' + helperLine[linha + 1]][col - 1].piece.type)) {
+            board['line' + helperLine[linha + 1]][col - 1].blocked = true;
         }
     }
 }
 
 function checkRookMovement(board: Board, line: string, col: number) {
     checkOrtogonalMovement(board, line, col);
+}
+
+function checkBishopMovement(board: Board, line: string, col: number) {
+    checkDiagonalMovement(board, line, col);
+}
+
+function checkQueenMovement(board: Board, line: string, col: number) {
+    checkOrtogonalMovement(board, line, col);
+    checkDiagonalMovement(board, line, col);
+}
+
+function checkKingMovement(board: Board, line: string, col: number) {
+    checkKingOrtogonalMovement(board, line, col);
+    checkKingDiagonalMovement(board, line, col);
 }
 
 function checkOrtogonalMovement(board: Board, line: string, col: number) {
@@ -156,6 +191,206 @@ function checkOrtogonalMovement(board: Board, line: string, col: number) {
     }
 }
 
+function checkDiagonalMovement(board: Board, line: string, col: number) {
+    const linha = helperLine.indexOf(line);
+    var linhaAux = 0;
+    var breakUp = false;
+    var breakDown = false;
+    for (var c = col - 1; c >= 0; c--) {
+        linhaAux++;
+        if ((linha + linhaAux) < 8 && !breakUp) {
+            if (!board['line' + helperLine[linha + linhaAux]][c].piece) {
+                board['line' + helperLine[linha + linhaAux]][c].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha + linhaAux]][c]);
+                breakUp = true;
+            }
+        }
+        if ((linha - linhaAux) >= 0 && !breakDown) {
+            if (!board['line' + helperLine[linha - linhaAux]][c].piece) {
+                board['line' + helperLine[linha - linhaAux]][c].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha - linhaAux]][c]);
+                breakDown = true;
+            }
+        }
+
+        if (breakUp && breakDown) {
+            break;
+        }
+    }
+
+    linhaAux = 0;
+    breakUp = false;
+    breakDown = false;
+    for (var c = col + 1; c < 8; c++) {
+        linhaAux++;
+        if ((linha + linhaAux) < 8 && !breakUp) {
+            if (!board['line' + helperLine[linha + linhaAux]][c].piece) {
+                board['line' + helperLine[linha + linhaAux]][c].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha + linhaAux]][c]);
+                breakUp = true;
+            }
+        }
+        if ((linha - linhaAux) >= 0 && !breakDown) {
+            if (!board['line' + helperLine[linha - linhaAux]][c].piece) {
+                board['line' + helperLine[linha - linhaAux]][c].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha - linhaAux]][c]);
+                breakDown = true;
+            }
+        }
+
+        if (breakUp && breakDown) {
+            break;
+        }
+    }
+}
+
+function checkKingOrtogonalMovement(board: Board, line: string, col: number) {
+    const linha = helperLine.indexOf(line);
+    if (col - 1 >= 0) {
+        if (!board['line' + helperLine[linha]][col - 1].piece) {
+            board['line' + helperLine[linha]][col - 1].destiny = true;
+        } else {
+            checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha]][col - 1]);
+        }
+    }
+    if (col + 1 < 8) {
+        if (!board['line' + helperLine[linha]][col + 1].piece) {
+            board['line' + helperLine[linha]][col + 1].destiny = true;
+        } else {
+            checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha]][col + 1]);
+        }
+    }
+    if (linha - 1 >= 0) {
+        if (!board['line' + helperLine[linha - 1]][col].piece) {
+            board['line' + helperLine[linha - 1]][col].destiny = true;
+        } else {
+            checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha - 1]][col]);
+        }
+    }
+    if (linha + 1 < 8) {
+        if (!board['line' + helperLine[linha + 1]][col].piece) {
+            board['line' + helperLine[linha + 1]][col].destiny = true;
+        } else {
+            checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha + 1]][col]);
+        }
+    }
+}
+
+function checkKingDiagonalMovement(board: Board, line: string, col: number) {
+    const linha = helperLine.indexOf(line);
+    var linhaAux = 1;
+    if (col - 1 >= 0) {
+        if ((linha + linhaAux) < 8) {
+            if (!board['line' + helperLine[linha + linhaAux]][col - 1].piece) {
+                board['line' + helperLine[linha + linhaAux]][col - 1].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha + linhaAux]][col - 1]);
+            }
+        }
+        if ((linha - linhaAux) >= 0) {
+            if (!board['line' + helperLine[linha - linhaAux]][col - 1].piece) {
+                board['line' + helperLine[linha - linhaAux]][col - 1].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha - linhaAux]][col - 1]);
+            }
+        }
+    }
+
+    if (col + 1 < 8) {
+        if ((linha + linhaAux) < 8) {
+            if (!board['line' + helperLine[linha + linhaAux]][col + 1].piece) {
+                board['line' + helperLine[linha + linhaAux]][col + 1].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha + linhaAux]][col + 1]);
+            }
+        }
+        if ((linha - linhaAux) >= 0) {
+            if (!board['line' + helperLine[linha - linhaAux]][col + 1].piece) {
+                board['line' + helperLine[linha - linhaAux]][col + 1].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha - linhaAux]][col + 1]);
+            }
+        }
+    }
+}
+
+function checkKnightMovement(board: Board, line: string, col: number) {
+    const linha = helperLine.indexOf(line);
+    var linhaAux = 2;
+    if (col - 1 >= 0) {
+        if ((linha + linhaAux) < 8) {
+            if (!board['line' + helperLine[linha + linhaAux]][col - 1].piece) {
+                board['line' + helperLine[linha + linhaAux]][col - 1].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha + linhaAux]][col - 1]);
+            }
+        }
+        if ((linha - linhaAux) >= 0) {
+            if (!board['line' + helperLine[linha - linhaAux]][col - 1].piece) {
+                board['line' + helperLine[linha - linhaAux]][col - 1].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha - linhaAux]][col - 1]);
+            }
+        }
+    }
+
+    if (col + 1 < 8) {
+        if ((linha + linhaAux) < 8) {
+            if (!board['line' + helperLine[linha + linhaAux]][col + 1].piece) {
+                board['line' + helperLine[linha + linhaAux]][col + 1].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha + linhaAux]][col + 1]);
+            }
+        }
+        if ((linha - linhaAux) >= 0) {
+            if (!board['line' + helperLine[linha - linhaAux]][col + 1].piece) {
+                board['line' + helperLine[linha - linhaAux]][col + 1].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha - linhaAux]][col + 1]);
+            }
+        }
+    }
+
+    var linhaAux = 1;
+    if (col - 2 >= 0) {
+        if ((linha + linhaAux) < 8) {
+            if (!board['line' + helperLine[linha + linhaAux]][col - 2].piece) {
+                board['line' + helperLine[linha + linhaAux]][col - 2].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha + linhaAux]][col - 2]);
+            }
+        }
+        if ((linha - linhaAux) >= 0) {
+            if (!board['line' + helperLine[linha - linhaAux]][col - 2].piece) {
+                board['line' + helperLine[linha - linhaAux]][col - 2].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha - linhaAux]][col - 2]);
+            }
+        }
+    }
+
+    if (col + 2 < 8) {
+        if ((linha + linhaAux) < 8) {
+            if (!board['line' + helperLine[linha + linhaAux]][col + 2].piece) {
+                board['line' + helperLine[linha + linhaAux]][col + 2].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha + linhaAux]][col + 2]);
+            }
+        }
+        if ((linha - linhaAux) >= 0) {
+            if (!board['line' + helperLine[linha - linhaAux]][col + 2].piece) {
+                board['line' + helperLine[linha - linhaAux]][col + 2].destiny = true;
+            } else {
+                checkBlocked(board['line' + helperLine[linha]][col].piece, board['line' + helperLine[linha - linhaAux]][col + 2]);
+            }
+        }
+    }
+}
+
 function generateDefaultBoard() {
     const board: Board = {
         whiteTurn: true,
@@ -165,49 +400,49 @@ function generateDefaultBoard() {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: BlackPiece.ROOK },
+                piece: { moved: false, type: BlackPiece.ROOK },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: BlackPiece.KNIGHT },
+                piece: { moved: false, type: BlackPiece.KNIGHT },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: BlackPiece.BISHOP },
+                piece: { moved: false, type: BlackPiece.BISHOP },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: BlackPiece.QUEEN },
+                piece: { moved: false, type: BlackPiece.QUEEN },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: BlackPiece.KING },
+                piece: { moved: false, type: BlackPiece.KING },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: BlackPiece.BISHOP },
+                piece: { moved: false, type: BlackPiece.BISHOP },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: BlackPiece.KNIGHT },
+                piece: { moved: false, type: BlackPiece.KNIGHT },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: BlackPiece.ROOK },
+                piece: { moved: false, type: BlackPiece.ROOK },
             }
         ],
         lineB: [],
@@ -221,49 +456,49 @@ function generateDefaultBoard() {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: WhitePiece.ROOK },
+                piece: { moved: false, type: WhitePiece.ROOK },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: WhitePiece.KNIGHT },
+                piece: { moved: false, type: WhitePiece.KNIGHT },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: WhitePiece.BISHOP },
+                piece: { moved: false, type: WhitePiece.BISHOP },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: WhitePiece.QUEEN },
+                piece: { moved: false, type: WhitePiece.QUEEN },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: WhitePiece.KING },
+                piece: { moved: false, type: WhitePiece.KING },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: WhitePiece.BISHOP },
+                piece: { moved: false, type: WhitePiece.BISHOP },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: WhitePiece.KNIGHT },
+                piece: { moved: false, type: WhitePiece.KNIGHT },
             },
             {
                 selected: false,
                 destiny: false,
                 blocked: false,
-                //piece: { moved: false, type: WhitePiece.ROOK },
+                piece: { moved: false, type: WhitePiece.ROOK },
             }
         ]
     };
@@ -274,7 +509,7 @@ function generateDefaultBoard() {
             selected: false,
             destiny: false,
             blocked: false,
-            //piece: { moved: false, type: BlackPiece.PAWN },
+            piece: { moved: false, type: BlackPiece.PAWN },
         });
     }
 
@@ -315,13 +550,13 @@ function generateDefaultBoard() {
             selected: false,
             destiny: false,
             blocked: false,
-            //piece: { moved: false, type: WhitePiece.PAWN },
+            piece: { moved: false, type: WhitePiece.PAWN },
         });
     }
 
-    board.lineC[5].piece = { moved: false, type: WhitePiece.ROOK };
-    board.lineF[2].piece = { moved: false, type: BlackPiece.ROOK };
-    board.lineF[5].piece = { moved: false, type: WhitePiece.ROOK };
+    /*board.lineC[5].piece = { moved: false, type: WhitePiece.BISHOP };
+    board.lineF[2].piece = { moved: false, type: BlackPiece.BISHOP };
+    board.lineF[5].piece = { moved: false, type: WhitePiece.BISHOP };*/
 
 
     return board;

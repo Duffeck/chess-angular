@@ -1,4 +1,7 @@
-<div *ngIf="(board$ | async) as b" class="chessboard">
+<div
+  style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"
+  unselectable="on" onselectstart="return false;" onmousedown="return false;" *ngIf="(board$ | async) as b"
+  class="chessboard">
   <!-- 1st -->
   <div class="white" (click)="tileClick('A', 0)" [class.selected]="b.lineA[0].selected"
     [class.blocked]="b.lineA[0].blocked" [class.destiny]="b.lineA[0].destiny">{{b.lineA[0].piece?.type}}</div>
